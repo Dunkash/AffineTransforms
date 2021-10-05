@@ -18,7 +18,7 @@ namespace AffineTransforms
         int mode =0;
         List<Point> points;
         List<Point[]> lines;
-        List<Rectangle> rectangles;
+        List<Point[]> rectangles;
         bool mouseDown;
 
         public Form1()
@@ -26,7 +26,7 @@ namespace AffineTransforms
             InitializeComponent();
             this.points = new List<Point>();
             this.lines = new List<Point[]>();
-            this.rectangles = new List<Rectangle>();
+            this.rectangles = new List<Point[]>();
             this.DoubleBuffered = true;
         }
 
@@ -40,8 +40,16 @@ namespace AffineTransforms
             foreach (var i in lines)
                 g.DrawLine(pen, i[0], i[1]);
             foreach (var i in rectangles)
-                g.DrawRectangle(pen, i);
-
+            {
+                g.DrawLine(pen, i[0], i[1]);
+                g.DrawLine(pen, i[1], i[2]);
+                g.DrawLine(pen, i[2], i[3]);
+                g.DrawLine(pen, i[3], i[0]);
+            }
+            if (mode == 4)
+                g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2,5,5);
+            if (mode == 5)
+                g.FillEllipse(brush, end.X, end.Y, 5, 5);
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -71,17 +79,20 @@ namespace AffineTransforms
 
                 }
                 else if (mode == 2)
-                    rectangles.Add(new Rectangle(Math.Min(beg.X, end.X),
-                                                 Math.Min(beg.Y, end.Y),
-                                                 Math.Abs(beg.X - end.X),
-                                                 Math.Abs(beg.Y - end.Y)
-                                                 ));
+                {
+                    var first = new Point(Math.Min(beg.X, end.X), Math.Max(beg.Y, end.Y));
+                    var second = new Point(Math.Min(beg.X, end.X), Math.Min(beg.Y, end.Y));
+                    var third = new Point(Math.Max(beg.X, end.X), Math.Min(beg.Y, end.Y));
+                    var fourth = new Point(Math.Max(beg.X, end.X), Math.Max(beg.Y, end.Y));
+
+                    rectangles.Add(new Point[] { first, second, third, fourth });
+                }
 
                 else if (mode == 3)
                     MoveImages();
 
-                else if (mode == 4)
-                    RotateBase();
+                else if (mode == 5)
+                    RotateAround(e.Location.X,e.Location.Y);
 
                 this.Refresh();
             }
@@ -122,7 +133,8 @@ namespace AffineTransforms
 
         private void Rotate_Click(object sender, EventArgs e)
         {
-            RotateBase();
+            mode = 4;
+            RotateAround(pictureBox1.Width / 2, pictureBox1.Height / 2);
             this.Refresh();
         }
 
@@ -136,12 +148,11 @@ namespace AffineTransforms
 
         }
 
-        private void RotateBase()
+        private void RotateAround(int wid, int heigh)
         {
             Matrix matrix = new Matrix();
-            matrix.RotateAt(10,new Point(pictureBox1.Width/2,pictureBox1.Height/2));
+            matrix.RotateAt(10, new Point(wid, heigh));
             ApplyMatrix(matrix);
-
         }
 
         private void ApplyMatrix(Matrix matrix)
@@ -163,14 +174,16 @@ namespace AffineTransforms
 
             if (rectangles.Count > 0)
             {
+                var temp = rectangles.ToArray();
                 for (var i = 0; i < rectangles.Count; i++)
-                {
-                    var t = rectangles[i].Location;
-                    var g = new Point[] { t };
-                    matrix.TransformPoints(g);
-                    rectangles[i] = new Rectangle(g[0], rectangles[i].Size);
-                }
+                    matrix.TransformPoints(temp[i]);
+                rectangles = new List<Point[]>(temp);
             }
+        }
+
+        private void RotatePoint_Click(object sender, EventArgs e)
+        {
+            mode = 5;
         }
     }
 }

@@ -38,6 +38,7 @@ namespace AffineTransforms
             this.Clear = new System.Windows.Forms.ToolStripButton();
             this.Transfer = new System.Windows.Forms.ToolStripButton();
             this.Rotate = new System.Windows.Forms.ToolStripButton();
+            this.RotatePoint = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +64,8 @@ namespace AffineTransforms
             this.Square,
             this.Clear,
             this.Transfer,
-            this.Rotate});
+            this.Rotate,
+            this.RotatePoint});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 31);
@@ -130,6 +132,16 @@ namespace AffineTransforms
             this.Rotate.Text = "Rotate";
             this.Rotate.Click += new System.EventHandler(this.Rotate_Click);
             // 
+            // RotatePoint
+            // 
+            this.RotatePoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.RotatePoint.Image = ((System.Drawing.Image)(resources.GetObject("RotatePoint.Image")));
+            this.RotatePoint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RotatePoint.Name = "RotatePoint";
+            this.RotatePoint.Size = new System.Drawing.Size(106, 28);
+            this.RotatePoint.Text = "RotateAround";
+            this.RotatePoint.Click += new System.EventHandler(this.RotatePoint_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -157,6 +169,7 @@ namespace AffineTransforms
         private System.Windows.Forms.ToolStripButton Clear;
         private System.Windows.Forms.ToolStripButton Transfer;
         private System.Windows.Forms.ToolStripButton Rotate;
+        private System.Windows.Forms.ToolStripButton RotatePoint;
     }
 }
 
