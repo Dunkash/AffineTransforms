@@ -1,0 +1,10 @@
+C:\Users\Dunkash\source\repos\AffineTransforms\bin\Debug\AffineTransforms.exe.config
+C:\Users\Dunkash\source\repos\AffineTransforms\bin\Debug\AffineTransforms.exe
+C:\Users\Dunkash\source\repos\AffineTransforms\bin\Debug\AffineTransforms.pdb
+C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.csproj.AssemblyReference.cache
+C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.Properties.Resources.resources
+C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.csproj.GenerateResource.cache
+C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.csproj.CoreCompileInputs.cache
+C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.exe
+C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.pdb
+C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.Form1.resources
