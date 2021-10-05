@@ -37,6 +37,7 @@ namespace AffineTransforms
             this.Square = new System.Windows.Forms.ToolStripButton();
             this.Clear = new System.Windows.Forms.ToolStripButton();
             this.Transfer = new System.Windows.Forms.ToolStripButton();
+            this.Rotate = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +62,8 @@ namespace AffineTransforms
             this.Line,
             this.Square,
             this.Clear,
-            this.Transfer});
+            this.Transfer,
+            this.Rotate});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 31);
@@ -118,6 +120,16 @@ namespace AffineTransforms
             this.Transfer.Text = "Move";
             this.Transfer.Click += new System.EventHandler(this.Transfer_Click);
             // 
+            // Rotate
+            // 
+            this.Rotate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Rotate.Image = ((System.Drawing.Image)(resources.GetObject("Rotate.Image")));
+            this.Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Rotate.Name = "Rotate";
+            this.Rotate.Size = new System.Drawing.Size(57, 28);
+            this.Rotate.Text = "Rotate";
+            this.Rotate.Click += new System.EventHandler(this.Rotate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -144,6 +156,7 @@ namespace AffineTransforms
         private System.Windows.Forms.ToolStripButton Square;
         private System.Windows.Forms.ToolStripButton Clear;
         private System.Windows.Forms.ToolStripButton Transfer;
+        private System.Windows.Forms.ToolStripButton Rotate;
     }
 }
 

@@ -66,9 +66,9 @@ namespace AffineTransforms
                 end = new Point(e.X, e.Y);
                 if (mode == 1)
                 {
-                    var t = new Point[] {beg,end};
+                    var t = new Point[] { beg, end };
                     lines.Add(t);
-                    
+
                 }
                 else if (mode == 2)
                     rectangles.Add(new Rectangle(Math.Min(beg.X, end.X),
@@ -78,9 +78,10 @@ namespace AffineTransforms
                                                  ));
 
                 else if (mode == 3)
-                {
                     MoveImages();
-                }
+
+                else if (mode == 4)
+                    RotateBase();
 
                 this.Refresh();
             }
@@ -119,13 +120,32 @@ namespace AffineTransforms
             mode = 3;
         }
 
+        private void Rotate_Click(object sender, EventArgs e)
+        {
+            RotateBase();
+            this.Refresh();
+        }
+
         private void MoveImages()
         {
 
             Matrix matrix = new Matrix();
             matrix.Translate(-1 * (beg.X - end.X),
                             -1 * (beg.Y - end.Y));
+            ApplyMatrix(matrix);
 
+        }
+
+        private void RotateBase()
+        {
+            Matrix matrix = new Matrix();
+            matrix.RotateAt(10,new Point(pictureBox1.Width/2,pictureBox1.Height/2));
+            ApplyMatrix(matrix);
+
+        }
+
+        private void ApplyMatrix(Matrix matrix)
+        {
             if (points.Count > 0)
             {
                 var temp = points.ToArray();
@@ -151,7 +171,6 @@ namespace AffineTransforms
                     rectangles[i] = new Rectangle(g[0], rectangles[i].Size);
                 }
             }
-
         }
     }
 }
