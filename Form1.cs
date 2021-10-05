@@ -79,37 +79,7 @@ namespace AffineTransforms
 
                 else if (mode == 3)
                 {
-
-                    Matrix matrix = new Matrix();
-                    matrix.Translate(-1 * (beg.X - end.X),
-                                    -1 * (beg.Y - end.Y));
-
-                    if (points.Count>0)
-                    {
-                        var temp = points.ToArray();
-                        matrix.TransformPoints(temp);
-                        points = new List<Point>(temp);
-                    }
-
-                    if (lines.Count>0)
-                    {
-                        var temp = lines.ToArray();
-                        for (var i = 0; i < lines.Count; i++)
-                            matrix.TransformPoints(temp[i]);
-                        lines = new List<Point[]>(temp);
-                    }
-
-                    if (rectangles.Count>0)
-                    {
-                        for (var i=0; i<rectangles.Count;i++)
-                        {
-                            var t = rectangles[i].Location;
-                            var g = new Point[] { t };
-                            matrix.TransformPoints(g);
-                            rectangles[i] = new Rectangle(g[0],rectangles[i].Size);
-                        }
-                    }
-
+                    MoveImages();
                 }
 
                 this.Refresh();
@@ -147,6 +117,41 @@ namespace AffineTransforms
         private void Transfer_Click(object sender, EventArgs e)
         {
             mode = 3;
+        }
+
+        private void MoveImages()
+        {
+
+            Matrix matrix = new Matrix();
+            matrix.Translate(-1 * (beg.X - end.X),
+                            -1 * (beg.Y - end.Y));
+
+            if (points.Count > 0)
+            {
+                var temp = points.ToArray();
+                matrix.TransformPoints(temp);
+                points = new List<Point>(temp);
+            }
+
+            if (lines.Count > 0)
+            {
+                var temp = lines.ToArray();
+                for (var i = 0; i < lines.Count; i++)
+                    matrix.TransformPoints(temp[i]);
+                lines = new List<Point[]>(temp);
+            }
+
+            if (rectangles.Count > 0)
+            {
+                for (var i = 0; i < rectangles.Count; i++)
+                {
+                    var t = rectangles[i].Location;
+                    var g = new Point[] { t };
+                    matrix.TransformPoints(g);
+                    rectangles[i] = new Rectangle(g[0], rectangles[i].Size);
+                }
+            }
+
         }
     }
 }
