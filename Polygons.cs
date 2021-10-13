@@ -25,5 +25,16 @@ namespace AffineTransforms
             var result= b.Y * a.X - b.X * a.Y;
             return result;
         }
+
+        public static Point GetCenterPoint(Point[] points)
+        {
+            int sumX = 0, sumY = 0;
+            foreach(var p in points)
+            {
+                sumX += p.X;
+                sumY += p.Y;
+            }
+            return new Point((int)(sumX * 1.0 / points.Length * 1.0), (int)(sumY * 1.0 / points.Length * 1.0));
+        }
     }
 }

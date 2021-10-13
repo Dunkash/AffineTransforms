@@ -16,11 +16,13 @@ namespace AffineTransforms
         Point beg;
         Point end;
         Point scalePoint;
+        Point centerPoint;
         int mode =0;
         List<Point> points;
         List<Point[]> lines;
         List<Point[]> rectangles;
         List<List<Point>> polygons;
+
         int prevMode = 0;
         Point[] secondLine;
         bool mouseDown;
@@ -53,36 +55,42 @@ namespace AffineTransforms
                 g.DrawLine(pen, i[2], i[3]);
                 g.DrawLine(pen, i[3], i[0]);
             }
-            foreach(var p in polygons)
+            foreach (var p in polygons)
             {
-                for(int i = 0; i < p.Count-1; i++)
+                for (int i = 0; i < p.Count - 1; i++)
                 {
                     g.DrawLine(pen, p[i], p[i + 1]);
                 }
-                if(!(p==polygons.Last() && mode == 8))
+                if (!(p == polygons.Last() && mode == 8))
                 {
                     g.DrawLine(pen, p.First(), p.Last());
                 }
-               
+
             }
             if (mode == 4)
-                g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2,5,5);
+                g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2, 5, 5);
             if (mode == 5)
                 g.FillEllipse(brush, end.X, end.Y, 5, 5);
             if (mode == 7)
             {
+                if (lines.Count == 0)
+                    return;
+                var line = lines[0];
                 g.DrawLine(pen, secondLine[0], secondLine[1]);
-                var interPoint = Helpers.IntersectionPoint(lines[0][0], lines[0][1], secondLine[0], secondLine[1]);
-                g.FillEllipse(new SolidBrush(Color.Black), interPoint.X - 5, interPoint.Y - 5, 10, 10);
-                /*if (interPoint.X >= Math.Min(secondLine[0].X, lines[0][0].X) 
-                    && interPoint.X <= Math.Max(secondLine[1].X, lines[0][1].X) 
-                    && interPoint.Y >= Math.Min(secondLine[0].Y, lines[0][0].Y)
-                    && interPoint.Y <= Math.Max(secondLine[1].Y, lines[0][1].Y)
-                    )
-                   */
-                if ((secondLine[1].X - secondLine[0].X) <= interPoint.X || (secondLine[1].Y - secondLine[0].Y) <= interPoint.Y)
+                var interPoint = Helpers.IntersectionPoint(line[0], line[1], secondLine[0], secondLine[1]);
+                var check1 = ((interPoint.X - line[0].X) * (line[1].Y - line[0].Y) - (interPoint.Y - line[0].Y) * (line[1].X - line[0].X)) == 0;
+                var check2 = ((interPoint.X - secondLine[0].X) * (secondLine[1].Y - secondLine[0].Y) - (interPoint.Y - secondLine[0].Y) * (secondLine[1].X - secondLine[0].X)) == 0;
+                var checkX1 = (interPoint.X >= line[0].X && interPoint.X <= line[1].X) || (interPoint.X >= line[1].X && interPoint.X <= line[0].X);
+                var checkX2 = (interPoint.X >= secondLine[0].X && interPoint.X <= secondLine[1].X) || (interPoint.X >= secondLine[1].X && interPoint.X <= secondLine[0].X);
+                if ((!check1 && !checkX1) || (!checkX2 && !checkX2))
+                {
                     MessageBox.Show("Ребра не пересекаются");
+                    return;
+                }
+                g.FillEllipse(new SolidBrush(Color.Black), interPoint.X - 5, interPoint.Y - 5, 10, 10);
             }
+            if(centerPoint.X != 0 && centerPoint.Y != 0)
+                 g.FillEllipse(new SolidBrush(Color.Black), centerPoint.X - 5, centerPoint.Y - 5, 10, 10);
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -133,7 +141,6 @@ namespace AffineTransforms
                 else if (mode == 6)
                 {
                     scalePoint = new Point(e.X, e.Y);
-                    scale_btn.Enabled = true;
                 }
                 else if(mode == 7)
                 {
@@ -170,6 +177,8 @@ namespace AffineTransforms
             lines.Clear();
             rectangles.Clear();
             polygons.Clear();
+            scalePoint = new Point(0, 0);
+            centerPoint = new Point(0, 0);
             this.Refresh();
         }
 
@@ -181,6 +190,7 @@ namespace AffineTransforms
         private void Rotate_Click(object sender, EventArgs e)
         {
             mode = 4;
+
             RotateAround(pictureBox1.Width / 2, pictureBox1.Height / 2);
             this.Refresh();
         }
@@ -250,17 +260,29 @@ namespace AffineTransforms
         {
             var a = (double)alpha.Value / 100.0;
             var b = (double)beta.Value / 100.0;
-
             var rect = polygons.First();
-            for (int i = 0; i < rect.Count; i++)
+            centerPoint = Polygons.GetCenterPoint(polygons.First().ToArray());
+            if (scalePoint.X != 0 && scalePoint.Y != 0)
             {
-                var result = Helpers.Scale(a, b, rect[i], scalePoint);
-                rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
+                for (int i = 0; i < rect.Count; i++)
+                {
+                    var result = Helpers.Scale(a, b, rect[i], scalePoint);
+                    rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
+                }
+                scalePoint = new Point(0, 0);
+            }
+            else
+            {
+                for (int i = 0; i < rect.Count; i++)
+                {
+                    var result = Helpers.Scale(a, b, rect[i], centerPoint);
+                    rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
+                }
             }
             polygons[0] = rect;
             alphaPred = a;
             betaPred = b;
-            this.Refresh();
+            Refresh();
         }
 
         private void p_scale_btn_Click(object sender, EventArgs e)
