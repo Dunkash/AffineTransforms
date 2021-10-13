@@ -52,6 +52,23 @@ namespace AffineTransforms
             return result;
         }
 
+        static public Point GetCenterPoint(Point beg, Point end)
+        {
+            return new Point((beg.X + end.X) / 2, (beg.Y + end.Y) / 2);
+        }
+
+        static public double[,] Rotate(Point point, Point centerPoint, double phi)
+        {
+            int x = point.X, y = point.Y;
+            double[,] rotate = {
+                { Math.Cos(phi), Math.Sin(phi), 0 },
+                { -Math.Sin(phi), Math.Cos(phi), 0},
+                { -centerPoint.X *Math.Cos(phi)+ centerPoint.Y*Math.Sin(phi)+ centerPoint.X, -centerPoint.X * Math.Sin(phi)- centerPoint.Y *Math.Cos(phi) + centerPoint.Y, 1 } };
+            double[,] matr = { { point.X, point.Y, 1 } };
+            var result = MultiplyMatrix(matr, rotate);
+            return result;
+        }
+
         static public (int A, int B, int C) LineEquation(Point a, Point b)
         {
             int A = b.Y - a.Y;
