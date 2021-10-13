@@ -223,6 +223,14 @@ namespace AffineTransforms
                     matrix.TransformPoints(temp[i]);
                 rectangles = new List<Point[]>(temp);
             }
+
+            if (polygons.Count > 0)
+            { 
+              var temp = polygons.Select(p=>p.ToArray()).ToArray();
+              for (var i = 0; i < polygons.Count; i++)
+                     matrix.TransformPoints(temp[i]);
+              polygons = new List<List<Point>>(temp.Select(a=>new List<Point>(a)));    
+            }
         }
 
         private void RotatePoint_Click(object sender, EventArgs e)
