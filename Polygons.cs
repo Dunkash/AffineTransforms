@@ -12,7 +12,6 @@ namespace AffineTransforms
 {
     public class Polygons
     {
-        
         public static int GetRelativePosition(Point b, Point[] line)
         {
             if (line.Count() != 2)

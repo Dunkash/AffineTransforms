@@ -49,6 +49,8 @@ namespace AffineTransforms
             this.beta = new System.Windows.Forms.NumericUpDown();
             this.scale_btn = new System.Windows.Forms.Button();
             this.p_scale_btn = new System.Windows.Forms.Button();
+            this.BelongsButton = new System.Windows.Forms.ToolStripButton();
+            this.BelongsToConvexPolygonButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.alpha)).BeginInit();
@@ -57,10 +59,9 @@ namespace AffineTransforms
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(83, 26);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(124, 40);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(2419, 1271);
+            this.pictureBox1.Size = new System.Drawing.Size(3628, 1955);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
@@ -81,10 +82,13 @@ namespace AffineTransforms
             this.RotatePoint,
             this.IntersectionBtn,
             this.PolygonBtm,
-            this.rt90_btn});
+            this.rt90_btn,
+            this.BelongsButton,
+            this.BelongsToConvexPolygonButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(2129, 25);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(1924, 38);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -94,7 +98,7 @@ namespace AffineTransforms
             this.Point.Image = ((System.Drawing.Image)(resources.GetObject("Point.Image")));
             this.Point.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Point.Name = "Point";
-            this.Point.Size = new System.Drawing.Size(39, 22);
+            this.Point.Size = new System.Drawing.Size(56, 33);
             this.Point.Text = "Point";
             this.Point.Click += new System.EventHandler(this.Point_Click);
             // 
@@ -104,7 +108,7 @@ namespace AffineTransforms
             this.Line.Image = ((System.Drawing.Image)(resources.GetObject("Line.Image")));
             this.Line.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Line.Name = "Line";
-            this.Line.Size = new System.Drawing.Size(33, 22);
+            this.Line.Size = new System.Drawing.Size(47, 33);
             this.Line.Text = "Line";
             this.Line.Click += new System.EventHandler(this.Line_Click);
             // 
@@ -114,7 +118,7 @@ namespace AffineTransforms
             this.Square.Image = ((System.Drawing.Image)(resources.GetObject("Square.Image")));
             this.Square.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Square.Name = "Square";
-            this.Square.Size = new System.Drawing.Size(47, 22);
+            this.Square.Size = new System.Drawing.Size(71, 33);
             this.Square.Text = "Square";
             this.Square.Click += new System.EventHandler(this.Square_Click);
             // 
@@ -124,7 +128,7 @@ namespace AffineTransforms
             this.Clear.Image = ((System.Drawing.Image)(resources.GetObject("Clear.Image")));
             this.Clear.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(38, 22);
+            this.Clear.Size = new System.Drawing.Size(55, 33);
             this.Clear.Text = "Clear";
             this.Clear.Click += new System.EventHandler(this.Clear_Click);
             // 
@@ -134,7 +138,7 @@ namespace AffineTransforms
             this.Transfer.Image = ((System.Drawing.Image)(resources.GetObject("Transfer.Image")));
             this.Transfer.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Transfer.Name = "Transfer";
-            this.Transfer.Size = new System.Drawing.Size(41, 22);
+            this.Transfer.Size = new System.Drawing.Size(61, 33);
             this.Transfer.Text = "Move";
             this.Transfer.Click += new System.EventHandler(this.Transfer_Click);
             // 
@@ -144,7 +148,7 @@ namespace AffineTransforms
             this.Rotate.Image = ((System.Drawing.Image)(resources.GetObject("Rotate.Image")));
             this.Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Rotate.Name = "Rotate";
-            this.Rotate.Size = new System.Drawing.Size(45, 22);
+            this.Rotate.Size = new System.Drawing.Size(67, 33);
             this.Rotate.Text = "Rotate";
             this.Rotate.Click += new System.EventHandler(this.Rotate_Click);
             // 
@@ -154,7 +158,7 @@ namespace AffineTransforms
             this.RotatePoint.Image = ((System.Drawing.Image)(resources.GetObject("RotatePoint.Image")));
             this.RotatePoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RotatePoint.Name = "RotatePoint";
-            this.RotatePoint.Size = new System.Drawing.Size(85, 22);
+            this.RotatePoint.Size = new System.Drawing.Size(127, 33);
             this.RotatePoint.Text = "RotateAround";
             this.RotatePoint.Click += new System.EventHandler(this.RotatePoint_Click);
             // 
@@ -164,7 +168,7 @@ namespace AffineTransforms
             this.IntersectionBtn.Image = ((System.Drawing.Image)(resources.GetObject("IntersectionBtn.Image")));
             this.IntersectionBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.IntersectionBtn.Name = "IntersectionBtn";
-            this.IntersectionBtn.Size = new System.Drawing.Size(76, 22);
+            this.IntersectionBtn.Size = new System.Drawing.Size(113, 33);
             this.IntersectionBtn.Text = "Intersection ";
             this.IntersectionBtn.Click += new System.EventHandler(this.inter_btn_Click);
             // 
@@ -174,7 +178,7 @@ namespace AffineTransforms
             this.PolygonBtm.Image = ((System.Drawing.Image)(resources.GetObject("PolygonBtm.Image")));
             this.PolygonBtm.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.PolygonBtm.Name = "PolygonBtm";
-            this.PolygonBtm.Size = new System.Drawing.Size(55, 22);
+            this.PolygonBtm.Size = new System.Drawing.Size(81, 33);
             this.PolygonBtm.Text = "Polygon";
             this.PolygonBtm.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.PolygonBtm.Click += new System.EventHandler(this.Polygon_Btn_Click);
@@ -185,21 +189,20 @@ namespace AffineTransforms
             this.rt90_btn.Image = ((System.Drawing.Image)(resources.GetObject("rt90_btn.Image")));
             this.rt90_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rt90_btn.Name = "rt90_btn";
-            this.rt90_btn.Size = new System.Drawing.Size(60, 22);
+            this.rt90_btn.Size = new System.Drawing.Size(92, 33);
             this.rt90_btn.Text = "Rotate 90";
             this.rt90_btn.Click += new System.EventHandler(this.rt90_btn_Click_1);
             // 
             // alpha
             // 
-            this.alpha.Location = new System.Drawing.Point(39, 44);
-            this.alpha.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.alpha.Location = new System.Drawing.Point(58, 68);
             this.alpha.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
             this.alpha.Name = "alpha";
-            this.alpha.Size = new System.Drawing.Size(40, 20);
+            this.alpha.Size = new System.Drawing.Size(60, 26);
             this.alpha.TabIndex = 2;
             this.alpha.Value = new decimal(new int[] {
             100,
@@ -211,34 +214,31 @@ namespace AffineTransforms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 46);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(14, 71);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(14, 13);
+            this.label1.Size = new System.Drawing.Size(18, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "α";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 68);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(14, 105);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(13, 13);
+            this.label2.Size = new System.Drawing.Size(18, 20);
             this.label2.TabIndex = 5;
             this.label2.Text = "β";
             // 
             // beta
             // 
-            this.beta.Location = new System.Drawing.Point(39, 67);
-            this.beta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.beta.Location = new System.Drawing.Point(58, 103);
             this.beta.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
             this.beta.Name = "beta";
-            this.beta.Size = new System.Drawing.Size(40, 20);
+            this.beta.Size = new System.Drawing.Size(60, 26);
             this.beta.TabIndex = 4;
             this.beta.Value = new decimal(new int[] {
             100,
@@ -249,10 +249,9 @@ namespace AffineTransforms
             // scale_btn
             // 
             this.scale_btn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.scale_btn.Location = new System.Drawing.Point(9, 149);
-            this.scale_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.scale_btn.Location = new System.Drawing.Point(14, 229);
             this.scale_btn.Name = "scale_btn";
-            this.scale_btn.Size = new System.Drawing.Size(70, 19);
+            this.scale_btn.Size = new System.Drawing.Size(105, 29);
             this.scale_btn.TabIndex = 6;
             this.scale_btn.Text = "Scale";
             this.scale_btn.UseVisualStyleBackColor = true;
@@ -261,20 +260,39 @@ namespace AffineTransforms
             // p_scale_btn
             // 
             this.p_scale_btn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.p_scale_btn.Location = new System.Drawing.Point(9, 89);
-            this.p_scale_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.p_scale_btn.Location = new System.Drawing.Point(14, 137);
             this.p_scale_btn.Name = "p_scale_btn";
-            this.p_scale_btn.Size = new System.Drawing.Size(70, 54);
+            this.p_scale_btn.Size = new System.Drawing.Size(105, 83);
             this.p_scale_btn.TabIndex = 7;
             this.p_scale_btn.Text = "Choose point for scale";
             this.p_scale_btn.UseVisualStyleBackColor = true;
             this.p_scale_btn.Click += new System.EventHandler(this.p_scale_btn_Click);
             // 
+            // BelongsButton
+            // 
+            this.BelongsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.BelongsButton.Image = ((System.Drawing.Image)(resources.GetObject("BelongsButton.Image")));
+            this.BelongsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BelongsButton.Name = "BelongsButton";
+            this.BelongsButton.Size = new System.Drawing.Size(173, 33);
+            this.BelongsButton.Text = "Belongs to polygon";
+            this.BelongsButton.Click += new System.EventHandler(this.BelongsButton_Click);
+            // 
+            // BelongsToConvexPolygonButton
+            // 
+            this.BelongsToConvexPolygonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.BelongsToConvexPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("BelongsToConvexPolygonButton.Image")));
+            this.BelongsToConvexPolygonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BelongsToConvexPolygonButton.Name = "BelongsToConvexPolygonButton";
+            this.BelongsToConvexPolygonButton.Size = new System.Drawing.Size(233, 33);
+            this.BelongsToConvexPolygonButton.Text = "Belongs to convex polygon";
+            this.BelongsToConvexPolygonButton.Click += new System.EventHandler(this.BelongsToConvexPolygonButton_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2129, 1112);
+            this.ClientSize = new System.Drawing.Size(1924, 1050);
             this.Controls.Add(this.p_scale_btn);
             this.Controls.Add(this.scale_btn);
             this.Controls.Add(this.label2);
@@ -283,7 +301,6 @@ namespace AffineTransforms
             this.Controls.Add(this.alpha);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pictureBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -317,6 +334,8 @@ namespace AffineTransforms
         private System.Windows.Forms.ToolStripButton IntersectionBtn;
         private System.Windows.Forms.ToolStripButton PolygonBtm;
         private System.Windows.Forms.ToolStripButton rt90_btn;
+        private System.Windows.Forms.ToolStripButton BelongsButton;
+        private System.Windows.Forms.ToolStripButton BelongsToConvexPolygonButton;
     }
 }
 

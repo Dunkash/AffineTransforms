@@ -100,10 +100,27 @@ namespace AffineTransforms
             {
                 points.Add(new Point(e.X, e.Y)); 
                 this.Refresh();
-            }
-            if (mode == 8)
+            } else if (mode == 8)
             {
                 polygons.Last().Add(new Point(e.X, e.Y));
+            } else if (mode == 9)
+            {
+                if (polygons.Count > 0)
+                {
+                    points.Add(new Point(e.X, e.Y));
+                    this.Refresh();
+                    var res = Polygons.IsBelongsToPolygon(new Point(e.X, e.Y), polygons.Last());
+                    MessageBox.Show(res ? "Yes" : "No");
+                }
+            } else if (mode == 10)
+            {
+                if (polygons.Count > 0)
+                {
+                    points.Add(new Point(e.X, e.Y));
+                    this.Refresh();
+                    var res = Polygons.IsBelongsToConvexPolygon(new Point(e.X, e.Y), polygons.Last());
+                    MessageBox.Show(res ? "Yes" : "No");
+                }
             }
             else
             {
@@ -322,6 +339,16 @@ namespace AffineTransforms
                 mode = prevMode;
                 this.Refresh();
             }
+        }
+
+        private void BelongsButton_Click(object sender, EventArgs e)
+        {
+            mode = 9;
+        }
+
+        private void BelongsToConvexPolygonButton_Click(object sender, EventArgs e)
+        {
+            mode = 10;
         }
     }
 }
