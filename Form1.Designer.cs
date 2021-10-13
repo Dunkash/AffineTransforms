@@ -39,6 +39,7 @@ namespace AffineTransforms
             this.Transfer = new System.Windows.Forms.ToolStripButton();
             this.Rotate = new System.Windows.Forms.ToolStripButton();
             this.RotatePoint = new System.Windows.Forms.ToolStripButton();
+            this.inter_btn = new System.Windows.Forms.ToolStripButton();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.alpha = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@ namespace AffineTransforms
             this.beta = new System.Windows.Forms.NumericUpDown();
             this.scale_btn = new System.Windows.Forms.Button();
             this.p_scale_btn = new System.Windows.Forms.Button();
-            this.inter_btn = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.alpha)).BeginInit();
@@ -79,7 +79,7 @@ namespace AffineTransforms
             this.inter_btn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1410, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(1410, 27);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -89,7 +89,7 @@ namespace AffineTransforms
             this.Point.Image = ((System.Drawing.Image)(resources.GetObject("Point.Image")));
             this.Point.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Point.Name = "Point";
-            this.Point.Size = new System.Drawing.Size(46, 28);
+            this.Point.Size = new System.Drawing.Size(46, 24);
             this.Point.Text = "Point";
             this.Point.Click += new System.EventHandler(this.Point_Click);
             // 
@@ -99,7 +99,7 @@ namespace AffineTransforms
             this.Line.Image = ((System.Drawing.Image)(resources.GetObject("Line.Image")));
             this.Line.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Line.Name = "Line";
-            this.Line.Size = new System.Drawing.Size(40, 28);
+            this.Line.Size = new System.Drawing.Size(40, 24);
             this.Line.Text = "Line";
             this.Line.Click += new System.EventHandler(this.Line_Click);
             // 
@@ -109,7 +109,7 @@ namespace AffineTransforms
             this.Square.Image = ((System.Drawing.Image)(resources.GetObject("Square.Image")));
             this.Square.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Square.Name = "Square";
-            this.Square.Size = new System.Drawing.Size(59, 28);
+            this.Square.Size = new System.Drawing.Size(59, 24);
             this.Square.Text = "Square";
             this.Square.Click += new System.EventHandler(this.Square_Click);
             // 
@@ -119,7 +119,7 @@ namespace AffineTransforms
             this.Clear.Image = ((System.Drawing.Image)(resources.GetObject("Clear.Image")));
             this.Clear.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(47, 28);
+            this.Clear.Size = new System.Drawing.Size(47, 24);
             this.Clear.Text = "Clear";
             this.Clear.Click += new System.EventHandler(this.Clear_Click);
             // 
@@ -129,7 +129,7 @@ namespace AffineTransforms
             this.Transfer.Image = ((System.Drawing.Image)(resources.GetObject("Transfer.Image")));
             this.Transfer.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Transfer.Name = "Transfer";
-            this.Transfer.Size = new System.Drawing.Size(50, 28);
+            this.Transfer.Size = new System.Drawing.Size(50, 24);
             this.Transfer.Text = "Move";
             this.Transfer.Click += new System.EventHandler(this.Transfer_Click);
             // 
@@ -139,7 +139,7 @@ namespace AffineTransforms
             this.Rotate.Image = ((System.Drawing.Image)(resources.GetObject("Rotate.Image")));
             this.Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Rotate.Name = "Rotate";
-            this.Rotate.Size = new System.Drawing.Size(57, 28);
+            this.Rotate.Size = new System.Drawing.Size(57, 24);
             this.Rotate.Text = "Rotate";
             this.Rotate.Click += new System.EventHandler(this.Rotate_Click);
             // 
@@ -149,9 +149,19 @@ namespace AffineTransforms
             this.RotatePoint.Image = ((System.Drawing.Image)(resources.GetObject("RotatePoint.Image")));
             this.RotatePoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RotatePoint.Name = "RotatePoint";
-            this.RotatePoint.Size = new System.Drawing.Size(106, 28);
+            this.RotatePoint.Size = new System.Drawing.Size(106, 24);
             this.RotatePoint.Text = "RotateAround";
             this.RotatePoint.Click += new System.EventHandler(this.RotatePoint_Click);
+            // 
+            // inter_btn
+            // 
+            this.inter_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.inter_btn.Image = ((System.Drawing.Image)(resources.GetObject("inter_btn.Image")));
+            this.inter_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.inter_btn.Name = "inter_btn";
+            this.inter_btn.Size = new System.Drawing.Size(94, 24);
+            this.inter_btn.Text = "Intersection ";
+            this.inter_btn.Click += new System.EventHandler(this.inter_btn_Click);
             // 
             // alpha
             // 
@@ -228,16 +238,6 @@ namespace AffineTransforms
             this.p_scale_btn.Text = "Choose point for scale";
             this.p_scale_btn.UseVisualStyleBackColor = true;
             this.p_scale_btn.Click += new System.EventHandler(this.p_scale_btn_Click);
-            // 
-            // inter_btn
-            // 
-            this.inter_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.inter_btn.Image = ((System.Drawing.Image)(resources.GetObject("inter_btn.Image")));
-            this.inter_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.inter_btn.Name = "inter_btn";
-            this.inter_btn.Size = new System.Drawing.Size(94, 28);
-            this.inter_btn.Text = "Intersection ";
-            this.inter_btn.Click += new System.EventHandler(this.inter_btn_Click);
             // 
             // Form1
             // 

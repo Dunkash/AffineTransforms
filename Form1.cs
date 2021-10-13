@@ -242,5 +242,10 @@ namespace AffineTransforms
         {
             mode = 7;
         }
+
+        private void rt90_btn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
