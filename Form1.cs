@@ -91,6 +91,8 @@ namespace AffineTransforms
             }
             if(centerPoint.X != 0 && centerPoint.Y != 0)
                  g.FillEllipse(new SolidBrush(Color.Black), centerPoint.X - 5, centerPoint.Y - 5, 10, 10);
+            if (scalePoint.X != 0 && scalePoint.Y != 0)
+                g.FillEllipse(new SolidBrush(Color.Black), scalePoint.X - 5, scalePoint.Y - 5, 10, 10);
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -158,6 +160,7 @@ namespace AffineTransforms
                 else if (mode == 6)
                 {
                     scalePoint = new Point(e.X, e.Y);
+                    centerPoint = new Point(0, 0);
                 }
                 else if(mode == 7)
                 {
@@ -278,7 +281,7 @@ namespace AffineTransforms
             var a = (double)alpha.Value / 100.0;
             var b = (double)beta.Value / 100.0;
             var rect = polygons.First();
-            centerPoint = Polygons.GetCenterPoint(polygons.First().ToArray());
+            
             if (scalePoint.X != 0 && scalePoint.Y != 0)
             {
                 for (int i = 0; i < rect.Count; i++)
@@ -286,20 +289,24 @@ namespace AffineTransforms
                     var result = Helpers.Scale(a, b, rect[i], scalePoint);
                     rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
                 }
-                scalePoint = new Point(0, 0);
+              
             }
             else
             {
+                centerPoint = Polygons.GetCenterPoint(polygons.First().ToArray());
                 for (int i = 0; i < rect.Count; i++)
                 {
                     var result = Helpers.Scale(a, b, rect[i], centerPoint);
                     rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
                 }
+                
             }
             polygons[0] = rect;
             alphaPred = a;
             betaPred = b;
             Refresh();
+
+
         }
 
         private void p_scale_btn_Click(object sender, EventArgs e)
