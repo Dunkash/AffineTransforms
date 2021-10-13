@@ -8,3 +8,13 @@ C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.csproj
 C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.exe
 C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.pdb
 C:\Users\Dunkash\source\repos\AffineTransforms\obj\Debug\AffineTransforms.Form1.resources
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\obj\Debug\AffineTransforms.csproj.AssemblyReference.cache
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\obj\Debug\AffineTransforms.Form1.resources
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\obj\Debug\AffineTransforms.Properties.Resources.resources
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\obj\Debug\AffineTransforms.csproj.GenerateResource.cache
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\obj\Debug\AffineTransforms.csproj.CoreCompileInputs.cache
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\obj\Debug\AffineTransforms.exe
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\obj\Debug\AffineTransforms.pdb
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\bin\Debug\AffineTransforms.exe.config
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\bin\Debug\AffineTransforms.exe
+D:\MMCS\Computer Graphics\Task4\AffineTransforms\bin\Debug\AffineTransforms.pdb

@@ -20,6 +20,8 @@ namespace AffineTransforms
         List<Point> points;
         List<Point[]> lines;
         List<Point[]> rectangles;
+        List<List<Point>> polygons;
+        int prevMode = 0;
         Point[] secondLine;
         bool mouseDown;
         double alphaPred = 0.0;
@@ -32,6 +34,7 @@ namespace AffineTransforms
             this.lines = new List<Point[]>();
             this.rectangles = new List<Point[]>();
             this.DoubleBuffered = true;
+            this.polygons = new List<List<Point>>();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -49,6 +52,18 @@ namespace AffineTransforms
                 g.DrawLine(pen, i[1], i[2]);
                 g.DrawLine(pen, i[2], i[3]);
                 g.DrawLine(pen, i[3], i[0]);
+            }
+            foreach(var p in polygons)
+            {
+                for(int i = 0; i < p.Count-1; i++)
+                {
+                    g.DrawLine(pen, p[i], p[i + 1]);
+                }
+                if(!(p==polygons.Last() && mode == 8))
+                {
+                    g.DrawLine(pen, p.First(), p.Last());
+                }
+               
             }
             if (mode == 4)
                 g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2,5,5);
@@ -75,6 +90,10 @@ namespace AffineTransforms
             {
                 points.Add(new Point(e.X, e.Y)); 
                 this.Refresh();
+            }
+            if (mode == 8)
+            {
+                polygons.Last().Add(new Point(e.X, e.Y));
             }
             else
             {
@@ -118,8 +137,8 @@ namespace AffineTransforms
                 {
                     secondLine = new Point[] { beg, end };
 
-                }
-                this.Refresh();
+                } 
+                 this.Refresh();          
             }
         }
 
@@ -204,6 +223,14 @@ namespace AffineTransforms
                     matrix.TransformPoints(temp[i]);
                 rectangles = new List<Point[]>(temp);
             }
+
+            if (polygons.Count > 0)
+            { 
+              var temp = polygons.Select(p=>p.ToArray()).ToArray();
+              for (var i = 0; i < polygons.Count; i++)
+                     matrix.TransformPoints(temp[i]);
+              polygons = new List<List<Point>>(temp.Select(a=>new List<Point>(a)));    
+            }
         }
 
         private void RotatePoint_Click(object sender, EventArgs e)
@@ -247,5 +274,20 @@ namespace AffineTransforms
         {
 
         }
+        private void Polygon_Btn_Click(object sender, EventArgs e)
+        {
+            if (mode != 8)
+            {
+                prevMode = mode;
+                mode = 8;
+                polygons.Add(new List<Point>());
+            }
+            else
+            {
+                mode = prevMode;
+                this.Refresh();
+            }
+        }
+
     }
 }
