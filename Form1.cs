@@ -167,6 +167,7 @@ namespace AffineTransforms
             points.Clear();
             lines.Clear();
             rectangles.Clear();
+            polygons.Clear();
             this.Refresh();
         }
 
