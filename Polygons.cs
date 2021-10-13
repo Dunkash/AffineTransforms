@@ -29,7 +29,7 @@ namespace AffineTransforms
             return result;
         }
 
-<<<<<<< HEAD
+
         public static bool IsBelongsToConvexPolygon(Point point, List<Point> polygon)
         {
             List<Point[]> lines = new List<Point[]>();
@@ -73,24 +73,28 @@ namespace AffineTransforms
             return !(Math.Abs(anglesSum)<0.00000001);
         }
 
-        
+
 
         public static double Length(Point p)
         {
-            return Math.Sqrt(Math.Pow(p.X,2) + Math.Pow(p.Y, 2));
-=======
+            return Math.Sqrt(Math.Pow(p.X, 2) + Math.Pow(p.Y, 2));
+
+        }
+
         public static Point GetCenterPoint(Point[] points)
         {
             int sumX = 0, sumY = 0;
-            foreach(var p in points)
+            foreach (var p in points)
             {
                 sumX += p.X;
                 sumY += p.Y;
             }
             return new Point((int)(sumX * 1.0 / points.Length * 1.0), (int)(sumY * 1.0 / points.Length * 1.0));
->>>>>>> 71820bcc8e8759dbd5b76af1b70d07f2c2b4f96c
         }
+
     }
+
+
 
   
 }
