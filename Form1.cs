@@ -53,35 +53,39 @@ namespace AffineTransforms
                 g.DrawLine(pen, i[2], i[3]);
                 g.DrawLine(pen, i[3], i[0]);
             }
-            foreach(var p in polygons)
+            foreach (var p in polygons)
             {
-                for(int i = 0; i < p.Count-1; i++)
+                for (int i = 0; i < p.Count - 1; i++)
                 {
                     g.DrawLine(pen, p[i], p[i + 1]);
                 }
-                if(!(p==polygons.Last() && mode == 8))
+                if (!(p == polygons.Last() && mode == 8))
                 {
                     g.DrawLine(pen, p.First(), p.Last());
                 }
-               
+
             }
             if (mode == 4)
-                g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2,5,5);
+                g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2, 5, 5);
             if (mode == 5)
                 g.FillEllipse(brush, end.X, end.Y, 5, 5);
             if (mode == 7)
             {
+                if (lines.Count == 0)
+                    return;
+                var line = lines[0];
                 g.DrawLine(pen, secondLine[0], secondLine[1]);
-                var interPoint = Helpers.IntersectionPoint(lines[0][0], lines[0][1], secondLine[0], secondLine[1]);
-                g.FillEllipse(new SolidBrush(Color.Black), interPoint.X - 5, interPoint.Y - 5, 10, 10);
-                /*if (interPoint.X >= Math.Min(secondLine[0].X, lines[0][0].X) 
-                    && interPoint.X <= Math.Max(secondLine[1].X, lines[0][1].X) 
-                    && interPoint.Y >= Math.Min(secondLine[0].Y, lines[0][0].Y)
-                    && interPoint.Y <= Math.Max(secondLine[1].Y, lines[0][1].Y)
-                    )
-                   */
-                if ((secondLine[1].X - secondLine[0].X) <= interPoint.X || (secondLine[1].Y - secondLine[0].Y) <= interPoint.Y)
+                var interPoint = Helpers.IntersectionPoint(line[0], line[1], secondLine[0], secondLine[1]);
+                var check1 = ((interPoint.X - line[0].X) * (line[1].Y - line[0].Y) - (interPoint.Y - line[0].Y) * (line[1].X - line[0].X)) == 0;
+                var check2 = ((interPoint.X - secondLine[0].X) * (secondLine[1].Y - secondLine[0].Y) - (interPoint.Y - secondLine[0].Y) * (secondLine[1].X - secondLine[0].X)) == 0;
+                var checkX1 = (interPoint.X >= line[0].X && interPoint.X <= line[1].X) || (interPoint.X >= line[1].X && interPoint.X <= line[0].X);
+                var checkX2 = (interPoint.X >= secondLine[0].X && interPoint.X <= secondLine[1].X) || (interPoint.X >= secondLine[1].X && interPoint.X <= secondLine[0].X);
+                if ((!check1 && !checkX1) || (!checkX2 && !checkX2))
+                {
                     MessageBox.Show("Ребра не пересекаются");
+                    return;
+                }
+                g.FillEllipse(new SolidBrush(Color.Black), interPoint.X - 5, interPoint.Y - 5, 10, 10);
             }
         }
 
