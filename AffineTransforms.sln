@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AffineTransforms", "AffineTransforms.csproj", "{C931E663-21FF-4EA2-82EE-44746F11D03B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolygonTest", "..\PolygonTest\PolygonTest.csproj", "{60F7E624-330F-42E5-A0C9-4F9B8054ACC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\PolygonTest\Tests.csproj", "{60F7E624-330F-42E5-A0C9-4F9B8054ACC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

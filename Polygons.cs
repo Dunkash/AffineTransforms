@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
+
+
 namespace AffineTransforms
 {
     public class Polygons
     {
+        
         public static int GetRelativePosition(Point b, Point[] line)
         {
             if (line.Count() != 2)
@@ -26,15 +29,72 @@ namespace AffineTransforms
             return result;
         }
 
+
+        public static bool IsBelongsToConvexPolygon(Point point, List<Point> polygon)
+        {
+            List<Point[]> lines = new List<Point[]>();
+            for (var i = 0; i < polygon.Count() - 1; i++)
+            {
+                lines.Add(new Point[2] { polygon[i], polygon[i + 1] });
+            }
+            lines.Add(new Point[2] { polygon.Last(), polygon.First() });
+            var firstCheck = Polygons.GetRelativePosition(point, lines[0]);
+            for (var i = 1; i < polygon.Count(); i++)
+            {
+                if (firstCheck * Polygons.GetRelativePosition(point, lines[i]) < 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool IsBelongsToPolygon(Point point, List<Point> polygon)
+        {
+            List<Point[]> lines = new List<Point[]>();
+            Matrix matrix = new Matrix();
+            matrix.Translate(-point.X, -point.Y);
+            for (var i = 0; i < polygon.Count() - 1; i++)
+            {
+                lines.Add(new Point[2] { polygon[i], polygon[i + 1] });
+                matrix.TransformPoints(lines[i]);
+            }
+            lines.Add(new Point[2] { polygon.Last(), polygon.First() });
+            matrix.TransformPoints(lines.Last());
+            var anglesSum = 0.0;
+            for (var i = 0; i < lines.Count(); i++)
+            {
+                var p1 = lines[i][0];
+                var p2 = lines[i][1];
+                var scalarProd =  p1.X*p2.X + p1.Y*p2.Y;
+                var cos = scalarProd / (Length(p1) * Length(p2));
+                anglesSum += Math.Acos(cos) * Math.Sign(p1.X*p2.Y-p1.Y*p2.X);
+            }
+            return !(Math.Abs(anglesSum)<0.00000001);
+        }
+
+
+
+        public static double Length(Point p)
+        {
+            return Math.Sqrt(Math.Pow(p.X, 2) + Math.Pow(p.Y, 2));
+
+        }
+
         public static Point GetCenterPoint(Point[] points)
         {
             int sumX = 0, sumY = 0;
-            foreach(var p in points)
+            foreach (var p in points)
             {
                 sumX += p.X;
                 sumY += p.Y;
             }
             return new Point((int)(sumX * 1.0 / points.Length * 1.0), (int)(sumY * 1.0 / points.Length * 1.0));
         }
+
     }
+
+
+
+  
 }
