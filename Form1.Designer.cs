@@ -39,15 +39,25 @@ namespace AffineTransforms
             this.Transfer = new System.Windows.Forms.ToolStripButton();
             this.Rotate = new System.Windows.Forms.ToolStripButton();
             this.RotatePoint = new System.Windows.Forms.ToolStripButton();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.alpha = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.beta = new System.Windows.Forms.NumericUpDown();
+            this.scale_btn = new System.Windows.Forms.Button();
+            this.p_scale_btn = new System.Windows.Forms.Button();
+            this.inter_btn = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.alpha)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.beta)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 32);
+            this.pictureBox1.Location = new System.Drawing.Point(111, 32);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(776, 426);
+            this.pictureBox1.Size = new System.Drawing.Size(1579, 839);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
@@ -65,10 +75,11 @@ namespace AffineTransforms
             this.Clear,
             this.Transfer,
             this.Rotate,
-            this.RotatePoint});
+            this.RotatePoint,
+            this.inter_btn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(1410, 31);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -142,11 +153,103 @@ namespace AffineTransforms
             this.RotatePoint.Text = "RotateAround";
             this.RotatePoint.Click += new System.EventHandler(this.RotatePoint_Click);
             // 
+            // alpha
+            // 
+            this.alpha.Location = new System.Drawing.Point(52, 54);
+            this.alpha.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.alpha.Name = "alpha";
+            this.alpha.Size = new System.Drawing.Size(53, 22);
+            this.alpha.TabIndex = 2;
+            this.alpha.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.alpha.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 56);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(16, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "α";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 84);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 17);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "β";
+            // 
+            // beta
+            // 
+            this.beta.Location = new System.Drawing.Point(52, 82);
+            this.beta.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.beta.Name = "beta";
+            this.beta.Size = new System.Drawing.Size(53, 22);
+            this.beta.TabIndex = 4;
+            this.beta.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // scale_btn
+            // 
+            this.scale_btn.Enabled = false;
+            this.scale_btn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.scale_btn.Location = new System.Drawing.Point(12, 183);
+            this.scale_btn.Name = "scale_btn";
+            this.scale_btn.Size = new System.Drawing.Size(93, 23);
+            this.scale_btn.TabIndex = 6;
+            this.scale_btn.Text = "Scale";
+            this.scale_btn.UseVisualStyleBackColor = true;
+            this.scale_btn.Click += new System.EventHandler(this.scale_btn_Click);
+            // 
+            // p_scale_btn
+            // 
+            this.p_scale_btn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.p_scale_btn.Location = new System.Drawing.Point(12, 110);
+            this.p_scale_btn.Name = "p_scale_btn";
+            this.p_scale_btn.Size = new System.Drawing.Size(93, 67);
+            this.p_scale_btn.TabIndex = 7;
+            this.p_scale_btn.Text = "Choose point for scale";
+            this.p_scale_btn.UseVisualStyleBackColor = true;
+            this.p_scale_btn.Click += new System.EventHandler(this.p_scale_btn_Click);
+            // 
+            // inter_btn
+            // 
+            this.inter_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.inter_btn.Image = ((System.Drawing.Image)(resources.GetObject("inter_btn.Image")));
+            this.inter_btn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.inter_btn.Name = "inter_btn";
+            this.inter_btn.Size = new System.Drawing.Size(94, 28);
+            this.inter_btn.Text = "Intersection ";
+            this.inter_btn.Click += new System.EventHandler(this.inter_btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 470);
+            this.ClientSize = new System.Drawing.Size(1410, 764);
+            this.Controls.Add(this.p_scale_btn);
+            this.Controls.Add(this.scale_btn);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.beta);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.alpha);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
@@ -154,6 +257,8 @@ namespace AffineTransforms
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.alpha)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.beta)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,6 +275,14 @@ namespace AffineTransforms
         private System.Windows.Forms.ToolStripButton Transfer;
         private System.Windows.Forms.ToolStripButton Rotate;
         private System.Windows.Forms.ToolStripButton RotatePoint;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.NumericUpDown alpha;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown beta;
+        private System.Windows.Forms.Button scale_btn;
+        private System.Windows.Forms.Button p_scale_btn;
+        private System.Windows.Forms.ToolStripButton inter_btn;
     }
 }
 

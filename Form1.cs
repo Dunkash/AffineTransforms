@@ -15,11 +15,15 @@ namespace AffineTransforms
     {
         Point beg;
         Point end;
+        Point scalePoint;
         int mode =0;
         List<Point> points;
         List<Point[]> lines;
         List<Point[]> rectangles;
+        Point[] secondLine;
         bool mouseDown;
+        double alphaPred = 0.0;
+        double betaPred = 0.0;
 
         public Form1()
         {
@@ -50,6 +54,18 @@ namespace AffineTransforms
                 g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2,5,5);
             if (mode == 5)
                 g.FillEllipse(brush, end.X, end.Y, 5, 5);
+            if(mode == 7)
+            {
+                g.DrawLine(pen, secondLine[0], secondLine[1]);
+                var interPoint = Helpers.IntersectionPoint(lines[0][0], lines[0][1], secondLine[0], secondLine[1]);
+                g.FillEllipse(new SolidBrush(Color.Black), interPoint.X - 5, interPoint.Y - 5, 10, 10);
+                if (interPoint.X >= Math.Min(secondLine[0].X, lines[0][0].X) 
+                    && interPoint.X <= Math.Max(secondLine[1].X, lines[0][1].X) 
+                    && interPoint.Y >= Math.Min(secondLine[0].Y, lines[0][0].Y)
+                    && interPoint.Y <= Math.Max(secondLine[1].Y, lines[0][1].Y)
+                    )
+                    MessageBox.Show("Ребра не пересекаются");
+            }
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -92,8 +108,17 @@ namespace AffineTransforms
                     MoveImages();
 
                 else if (mode == 5)
-                    RotateAround(e.Location.X,e.Location.Y);
+                    RotateAround(e.Location.X, e.Location.Y);
+                else if (mode == 6)
+                {
+                    scalePoint = new Point(e.X, e.Y);
+                    scale_btn.Enabled = true;
+                }
+                else if(mode == 7)
+                {
+                    secondLine = new Point[] { beg, end };
 
+                }
                 this.Refresh();
             }
         }
@@ -184,6 +209,38 @@ namespace AffineTransforms
         private void RotatePoint_Click(object sender, EventArgs e)
         {
             mode = 5;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scale_btn_Click(object sender, EventArgs e)
+        {
+            var a = (double)alpha.Value / 100.0;
+            var b = (double)beta.Value / 100.0;
+
+            var rect = rectangles[0];
+            for (int i = 0; i < rect.Length; i++)
+            {
+                var result = Helpers.Scale(a, b, rect[i], scalePoint);
+                rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
+            }
+            rectangles[0] = rect;
+            alphaPred = a;
+            betaPred = b;
+            this.Refresh();
+        }
+
+        private void p_scale_btn_Click(object sender, EventArgs e)
+        {
+            mode = 6;
+        }
+
+        private void inter_btn_Click(object sender, EventArgs e)
+        {
+            mode = 7;
         }
     }
 }
