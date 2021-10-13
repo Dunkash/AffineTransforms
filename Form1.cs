@@ -69,16 +69,18 @@ namespace AffineTransforms
                 g.FillEllipse(brush, pictureBox1.Width / 2, pictureBox1.Height / 2,5,5);
             if (mode == 5)
                 g.FillEllipse(brush, end.X, end.Y, 5, 5);
-            if(mode == 7)
+            if (mode == 7)
             {
                 g.DrawLine(pen, secondLine[0], secondLine[1]);
                 var interPoint = Helpers.IntersectionPoint(lines[0][0], lines[0][1], secondLine[0], secondLine[1]);
                 g.FillEllipse(new SolidBrush(Color.Black), interPoint.X - 5, interPoint.Y - 5, 10, 10);
-                if (interPoint.X >= Math.Min(secondLine[0].X, lines[0][0].X) 
+                /*if (interPoint.X >= Math.Min(secondLine[0].X, lines[0][0].X) 
                     && interPoint.X <= Math.Max(secondLine[1].X, lines[0][1].X) 
                     && interPoint.Y >= Math.Min(secondLine[0].Y, lines[0][0].Y)
                     && interPoint.Y <= Math.Max(secondLine[1].Y, lines[0][1].Y)
                     )
+                   */
+                if ((secondLine[1].X - secondLine[0].X) <= interPoint.X || (secondLine[1].Y - secondLine[0].Y) <= interPoint.Y)
                     MessageBox.Show("Ребра не пересекаются");
             }
         }
@@ -167,6 +169,7 @@ namespace AffineTransforms
             points.Clear();
             lines.Clear();
             rectangles.Clear();
+            polygons.Clear();
             this.Refresh();
         }
 
@@ -248,13 +251,13 @@ namespace AffineTransforms
             var a = (double)alpha.Value / 100.0;
             var b = (double)beta.Value / 100.0;
 
-            var rect = rectangles[0];
-            for (int i = 0; i < rect.Length; i++)
+            var rect = polygons.First();
+            for (int i = 0; i < rect.Count; i++)
             {
                 var result = Helpers.Scale(a, b, rect[i], scalePoint);
                 rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
             }
-            rectangles[0] = rect;
+            polygons[0] = rect;
             alphaPred = a;
             betaPred = b;
             this.Refresh();
@@ -270,9 +273,19 @@ namespace AffineTransforms
             mode = 7;
         }
 
-        private void rt90_btn_Click(object sender, EventArgs e)
+        private void rt90_btn_Click_1(object sender, EventArgs e)
         {
-
+            if (lines.Count == 0)
+                return;
+            var line = lines[0];
+            var center = Helpers.GetCenterPoint(line[0], line[1]);
+            var angle = Math.PI * 90.0 / 180.0;
+            var result1 = Helpers.Rotate(line[0], center, angle);
+            var result2 = Helpers.Rotate(line[1], center, angle);
+            line[0] = new Point((int)result1[0,0], (int)result1[0,1]);
+            line[1] = new Point((int)result2[0, 0], (int)result2[0, 1]);
+            lines[0] = line;
+            this.Refresh();
         }
         private void Polygon_Btn_Click(object sender, EventArgs e)
         {
@@ -288,6 +301,5 @@ namespace AffineTransforms
                 this.Refresh();
             }
         }
-
     }
 }
