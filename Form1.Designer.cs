@@ -58,7 +58,7 @@ namespace AffineTransforms
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(83, 26);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(2419, 1271);
             this.pictureBox1.TabIndex = 0;
@@ -192,7 +192,7 @@ namespace AffineTransforms
             // alpha
             // 
             this.alpha.Location = new System.Drawing.Point(39, 44);
-            this.alpha.Margin = new System.Windows.Forms.Padding(2);
+            this.alpha.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.alpha.Maximum = new decimal(new int[] {
             200,
             0,
@@ -231,7 +231,7 @@ namespace AffineTransforms
             // beta
             // 
             this.beta.Location = new System.Drawing.Point(39, 67);
-            this.beta.Margin = new System.Windows.Forms.Padding(2);
+            this.beta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.beta.Maximum = new decimal(new int[] {
             200,
             0,
@@ -250,7 +250,7 @@ namespace AffineTransforms
             // 
             this.scale_btn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.scale_btn.Location = new System.Drawing.Point(9, 149);
-            this.scale_btn.Margin = new System.Windows.Forms.Padding(2);
+            this.scale_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.scale_btn.Name = "scale_btn";
             this.scale_btn.Size = new System.Drawing.Size(70, 19);
             this.scale_btn.TabIndex = 6;
@@ -262,7 +262,7 @@ namespace AffineTransforms
             // 
             this.p_scale_btn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.p_scale_btn.Location = new System.Drawing.Point(9, 89);
-            this.p_scale_btn.Margin = new System.Windows.Forms.Padding(2);
+            this.p_scale_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.p_scale_btn.Name = "p_scale_btn";
             this.p_scale_btn.Size = new System.Drawing.Size(70, 54);
             this.p_scale_btn.TabIndex = 7;
@@ -283,7 +283,7 @@ namespace AffineTransforms
             this.Controls.Add(this.alpha);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pictureBox1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
