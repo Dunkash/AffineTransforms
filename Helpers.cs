@@ -57,6 +57,19 @@ namespace AffineTransforms
             return new Point((beg.X + end.X) / 2, (beg.Y + end.Y) / 2);
         }
 
+        static public Point GetCenterPoint(Point[] points)
+        {
+            var result = new Point();
+            foreach (var i in points)
+            {
+                result.X += i.X;
+                result.Y += i.Y;
+            }
+            result.X /= points.Count();
+            result.Y /= points.Count();
+            return result;
+        }
+
         static public double[,] Rotate(Point point, Point centerPoint, double phi)
         {
             int x = point.X, y = point.Y;

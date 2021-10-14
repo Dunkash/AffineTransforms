@@ -102,10 +102,12 @@ namespace AffineTransforms
             {
                 points.Add(new Point(e.X, e.Y)); 
                 this.Refresh();
-            } else if (mode == 8)
+            } 
+            else if (mode == 8)
             {
                 polygons.Last().Add(new Point(e.X, e.Y));
-            } else if (mode == 9)
+            } 
+            else if (mode == 9)
             {
                 if (polygons.Count > 0)
                 {
@@ -114,7 +116,8 @@ namespace AffineTransforms
                     var res = Polygons.IsBelongsToPolygon(new Point(e.X, e.Y), polygons.Last());
                     MessageBox.Show(res ? "Yes" : "No");
                 }
-            } else if (mode == 10)
+            } 
+            else if (mode == 10)
             {
                 if (polygons.Count > 0)
                 {
@@ -210,9 +213,50 @@ namespace AffineTransforms
         private void Rotate_Click(object sender, EventArgs e)
         {
             mode = 4;
-
-            RotateAround(pictureBox1.Width / 2, pictureBox1.Height / 2);
+            RotateCenter();
+            //RotateAround(pictureBox1.Width / 2, pictureBox1.Height / 2);
             this.Refresh();
+        }
+
+        private void RotateCenter()
+        {
+            if (lines.Count > 0)
+            {
+                var temp = lines.ToArray();
+                for (var i = 0; i < lines.Count; i++)
+                {
+                    Matrix matrix = new Matrix();
+                    matrix.RotateAt(10, Helpers.GetCenterPoint(lines[i]));
+                    matrix.TransformPoints(temp[i]);
+                }
+                lines = new List<Point[]>(temp);
+            }
+
+            if (rectangles.Count > 0)
+            {
+                var temp = rectangles.ToArray();
+                for (var i = 0; i < rectangles.Count; i++)
+                {
+                    Matrix matrix = new Matrix();
+                    matrix.RotateAt(10, Helpers.GetCenterPoint(rectangles[i]));
+                    matrix.TransformPoints(temp[i]);
+                }
+                rectangles = new List<Point[]>(temp);
+            }
+
+            if (polygons.Count > 0)
+            {
+                var temp = polygons.Select(p => p.ToArray()).ToArray();
+                for (var i = 0; i < polygons.Count; i++)
+                {
+                    Matrix matrix = new Matrix();
+                    var ttemp = polygons[i].ToArray();
+                    matrix.RotateAt(10, Helpers.GetCenterPoint(ttemp));
+                    matrix.TransformPoints(temp[i]);
+                    polygons[i] = new List<Point>(ttemp);
+                }
+                polygons = new List<List<Point>>(temp.Select(a => new List<Point>(a)));
+            }
         }
 
         private void MoveImages()
