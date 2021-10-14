@@ -12,7 +12,7 @@ namespace AffineTransforms
 {
     public class Polygons
     {
-        public static int GetRelativePosition(Point b, Point[] line)
+        public static float GetRelativePosition(PointF b, PointF[] line)
         {
             if (line.Count() != 2)
             {
@@ -20,7 +20,7 @@ namespace AffineTransforms
             }
             Matrix matrix = new Matrix();
             matrix.Translate(-line[0].X, -line[0].Y);
-            var points = new Point[2] { b, line[1] };
+            var points = new PointF[2] { b, line[1] };
             matrix.TransformPoints(points);
             b = points[0];
             var a = points[1];
@@ -29,14 +29,14 @@ namespace AffineTransforms
         }
 
 
-        public static bool IsBelongsToConvexPolygon(Point point, List<Point> polygon)
+        public static bool IsBelongsToConvexPolygon(PointF point, List<PointF> polygon)
         {
-            List<Point[]> lines = new List<Point[]>();
+            List<PointF[]> lines = new List<PointF[]>();
             for (var i = 0; i < polygon.Count() - 1; i++)
             {
-                lines.Add(new Point[2] { polygon[i], polygon[i + 1] });
+                lines.Add(new PointF[2] { polygon[i], polygon[i + 1] });
             }
-            lines.Add(new Point[2] { polygon.Last(), polygon.First() });
+            lines.Add(new PointF[2] { polygon.Last(), polygon.First() });
             var firstCheck = Polygons.GetRelativePosition(point, lines[0]);
             for (var i = 1; i < polygon.Count(); i++)
             {
@@ -48,17 +48,17 @@ namespace AffineTransforms
             return true;
         }
 
-        public static bool IsBelongsToPolygon(Point point, List<Point> polygon)
+        public static bool IsBelongsToPolygon(PointF point, List<PointF> polygon)
         {
-            List<Point[]> lines = new List<Point[]>();
+            List<PointF[]> lines = new List<PointF[]>();
             Matrix matrix = new Matrix();
             matrix.Translate(-point.X, -point.Y);
             for (var i = 0; i < polygon.Count() - 1; i++)
             {
-                lines.Add(new Point[2] { polygon[i], polygon[i + 1] });
+                lines.Add(new PointF[2] { polygon[i], polygon[i + 1] });
                 matrix.TransformPoints(lines[i]);
             }
-            lines.Add(new Point[2] { polygon.Last(), polygon.First() });
+            lines.Add(new PointF[2] { polygon.Last(), polygon.First() });
             matrix.TransformPoints(lines.Last());
             var anglesSum = 0.0;
             for (var i = 0; i < lines.Count(); i++)
@@ -74,21 +74,21 @@ namespace AffineTransforms
 
 
 
-        public static double Length(Point p)
+        public static double Length(PointF p)
         {
             return Math.Sqrt(Math.Pow(p.X, 2) + Math.Pow(p.Y, 2));
 
         }
 
-        public static Point GetCenterPoint(Point[] points)
+        public static PointF GetCenterPoint(PointF[] points)
         {
-            int sumX = 0, sumY = 0;
+            float sumX = 0, sumY = 0;
             foreach (var p in points)
             {
                 sumX += p.X;
                 sumY += p.Y;
             }
-            return new Point((int)(sumX * 1.0 / points.Length * 1.0), (int)(sumY * 1.0 / points.Length * 1.0));
+            return new PointF((int)(sumX * 1.0 / points.Length * 1.0), (int)(sumY * 1.0 / points.Length * 1.0));
         }
 
     }

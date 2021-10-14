@@ -40,9 +40,9 @@ namespace AffineTransforms
             }
             return null;
         }
-        static public double[,] Scale(double alpha, double beta, Point point, Point scalePoint)
+        static public double[,] Scale(double alpha, double beta, PointF point, PointF scalePoint)
         {
-            int x = scalePoint.X, y = scalePoint.Y;
+            float x = scalePoint.X, y = scalePoint.Y;
             double[,] scale = {
                 { alpha, 0, 0 },
                 { 0, beta, 0 },
@@ -52,14 +52,14 @@ namespace AffineTransforms
             return result;
         }
 
-        static public Point GetCenterPoint(Point beg, Point end)
+        static public PointF GetCenterPoint(PointF beg, PointF end)
         {
-            return new Point((beg.X + end.X) / 2, (beg.Y + end.Y) / 2);
+            return new PointF((beg.X + end.X) / 2, (beg.Y + end.Y) / 2);
         }
 
-        static public Point GetCenterPoint(Point[] points)
+        static public PointF GetCenterPoint(PointF[] points)
         {
-            var result = new Point();
+            var result = new PointF();
             foreach (var i in points)
             {
                 result.X += i.X;
@@ -70,9 +70,9 @@ namespace AffineTransforms
             return result;
         }
 
-        static public double[,] Rotate(Point point, Point centerPoint, double phi)
+        static public double[,] Rotate(PointF point, PointF centerPoint, double phi)
         {
-            int x = point.X, y = point.Y;
+            float x = point.X, y = point.Y;
             double[,] rotate = {
                 { Math.Cos(phi), Math.Sin(phi), 0 },
                 { -Math.Sin(phi), Math.Cos(phi), 0},
@@ -82,28 +82,28 @@ namespace AffineTransforms
             return result;
         }
 
-        static public (int A, int B, int C) LineEquation(Point a, Point b)
+        static public (float A, float B, float C) LineEquation(PointF a, PointF b)
         {
-            int A = b.Y - a.Y;
-            int B = a.X - b.X;
-            int C = b.X * a.Y - a.X * b.Y;
+            float A = b.Y - a.Y;
+            float B = a.X - b.X;
+            float C = b.X * a.Y - a.X * b.Y;
             return (A, B, C);
 
         }
 
-        static public Point IntersectionPoint(Point a, Point b, Point c, Point d)
+        static public PointF IntersectionPoint(PointF a, PointF b, PointF c, PointF d)
         {
             var eq1 = LineEquation(a, b);
             var eq2 = LineEquation(c, d);
             if ((eq1.A * eq2.B - eq2.A * eq1.B) == 0)
-                return new Point();
+                return new PointF();
             var det1 = eq1.A * eq2.C - eq2.A * eq1.C;
             var det2 = eq1.B * eq2.C - eq2.B * eq1.C;
             if (det1 == 0 && det2 == 0)
-                return new Point();
-            int x = -(eq1.C * eq2.B - eq2.C * eq1.B) / (eq1.A * eq2.B - eq2.A * eq1.B);
-            int y = -(eq1.A * eq2.C - eq2.A * eq1.C) / (eq1.A * eq2.B - eq2.A * eq1.B);
-            return new Point(x, y);
+                return new PointF();
+            float x = -(eq1.C * eq2.B - eq2.C * eq1.B) / (eq1.A * eq2.B - eq2.A * eq1.B);
+            float y = -(eq1.A * eq2.C - eq2.A * eq1.C) / (eq1.A * eq2.B - eq2.A * eq1.B);
+            return new PointF(x, y);
         }
 
     }

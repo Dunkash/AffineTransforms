@@ -16,12 +16,12 @@ namespace AffineTransforms
         Point beg;
         Point end;
         Point scalePoint;
-        Point centerPoint;
+        PointF centerPoint;
         int mode =0;
-        List<Point> points;
-        List<Point[]> lines;
-        List<Point[]> rectangles;
-        List<List<Point>> polygons;
+        List<PointF> points;
+        List<PointF[]> lines;
+        List<PointF[]> rectangles;
+        List<List<PointF>> polygons;
 
         int prevMode = 0;
         Point[] secondLine;
@@ -32,11 +32,11 @@ namespace AffineTransforms
         public Form1()
         {
             InitializeComponent();
-            this.points = new List<Point>();
-            this.lines = new List<Point[]>();
-            this.rectangles = new List<Point[]>();
+            this.points = new List<PointF>();
+            this.lines = new List<PointF[]>();
+            this.rectangles = new List<PointF[]>();
             this.DoubleBuffered = true;
-            this.polygons = new List<List<Point>>();
+            this.polygons = new List<List<PointF>>();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -44,7 +44,7 @@ namespace AffineTransforms
             SolidBrush brush = new SolidBrush(Color.Red);
             Pen pen = new Pen(brush);
             Graphics g = e.Graphics;
-            foreach (Point point in points)
+            foreach (PointF point in points)
                 g.FillEllipse(brush, point.X, point.Y, 2, 2);
             foreach (var i in lines)
                 g.DrawLine(pen, i[0], i[1]);
@@ -100,18 +100,18 @@ namespace AffineTransforms
             mouseDown = true;
             if (mode==0)
             {
-                points.Add(new Point(e.X, e.Y)); 
+                points.Add(new PointF(e.X, e.Y)); 
                 this.Refresh();
             } 
             else if (mode == 8)
             {
-                polygons.Last().Add(new Point(e.X, e.Y));
+                polygons.Last().Add(new PointF(e.X, e.Y));
             } 
             else if (mode == 9)
             {
                 if (polygons.Count > 0)
                 {
-                    points.Add(new Point(e.X, e.Y));
+                    points.Add(new PointF(e.X, e.Y));
                     this.Refresh();
                     var res = Polygons.IsBelongsToPolygon(new Point(e.X, e.Y), polygons.Last());
                     MessageBox.Show(res ? "Yes" : "No");
@@ -121,7 +121,7 @@ namespace AffineTransforms
             {
                 if (polygons.Count > 0)
                 {
-                    points.Add(new Point(e.X, e.Y));
+                    points.Add(new PointF(e.X, e.Y));
                     this.Refresh();
                     var res = Polygons.IsBelongsToConvexPolygon(new Point(e.X, e.Y), polygons.Last());
                     MessageBox.Show(res ? "Yes" : "No");
@@ -141,7 +141,7 @@ namespace AffineTransforms
                 end = new Point(e.X, e.Y);
                 if (mode == 1)
                 {
-                    var t = new Point[] { beg, end };
+                    var t = new PointF[] { beg, end };
                     lines.Add(t);
 
                 }
@@ -152,7 +152,7 @@ namespace AffineTransforms
                     var third = new Point(Math.Max(beg.X, end.X), Math.Min(beg.Y, end.Y));
                     var fourth = new Point(Math.Max(beg.X, end.X), Math.Max(beg.Y, end.Y));
 
-                    rectangles.Add(new Point[] { first, second, third, fourth });
+                    rectangles.Add(new PointF[] { first, second, third, fourth });
                 }
 
                 else if (mode == 3)
@@ -226,10 +226,10 @@ namespace AffineTransforms
                 for (var i = 0; i < lines.Count; i++)
                 {
                     Matrix matrix = new Matrix();
-                    matrix.RotateAt(10, Helpers.GetCenterPoint(lines[i]));
+                    matrix.RotateAt(20, Helpers.GetCenterPoint(lines[i]));
                     matrix.TransformPoints(temp[i]);
                 }
-                lines = new List<Point[]>(temp);
+                lines = new List<PointF[]>(temp);
             }
 
             if (rectangles.Count > 0)
@@ -238,10 +238,10 @@ namespace AffineTransforms
                 for (var i = 0; i < rectangles.Count; i++)
                 {
                     Matrix matrix = new Matrix();
-                    matrix.RotateAt(10, Helpers.GetCenterPoint(rectangles[i]));
+                    matrix.RotateAt(20, Helpers.GetCenterPoint(rectangles[i]));
                     matrix.TransformPoints(temp[i]);
                 }
-                rectangles = new List<Point[]>(temp);
+                rectangles = new List<PointF[]>(temp);
             }
 
             if (polygons.Count > 0)
@@ -251,11 +251,11 @@ namespace AffineTransforms
                 {
                     Matrix matrix = new Matrix();
                     var ttemp = polygons[i].ToArray();
-                    matrix.RotateAt(10, Helpers.GetCenterPoint(ttemp));
+                    matrix.RotateAt(20, Helpers.GetCenterPoint(ttemp));
                     matrix.TransformPoints(temp[i]);
-                    polygons[i] = new List<Point>(ttemp);
+                    polygons[i] = new List<PointF>(ttemp);
                 }
-                polygons = new List<List<Point>>(temp.Select(a => new List<Point>(a)));
+                polygons = new List<List<PointF>>(temp.Select(a => new List<PointF>(a)));
             }
         }
 
@@ -282,7 +282,7 @@ namespace AffineTransforms
             {
                 var temp = points.ToArray();
                 matrix.TransformPoints(temp);
-                points = new List<Point>(temp);
+                points = new List<PointF>(temp);
             }
 
             if (lines.Count > 0)
@@ -290,7 +290,7 @@ namespace AffineTransforms
                 var temp = lines.ToArray();
                 for (var i = 0; i < lines.Count; i++)
                     matrix.TransformPoints(temp[i]);
-                lines = new List<Point[]>(temp);
+                lines = new List<PointF[]>(temp);
             }
 
             if (rectangles.Count > 0)
@@ -298,7 +298,7 @@ namespace AffineTransforms
                 var temp = rectangles.ToArray();
                 for (var i = 0; i < rectangles.Count; i++)
                     matrix.TransformPoints(temp[i]);
-                rectangles = new List<Point[]>(temp);
+                rectangles = new List<PointF[]>(temp);
             }
 
             if (polygons.Count > 0)
@@ -306,7 +306,7 @@ namespace AffineTransforms
               var temp = polygons.Select(p=>p.ToArray()).ToArray();
               for (var i = 0; i < polygons.Count; i++)
                      matrix.TransformPoints(temp[i]);
-              polygons = new List<List<Point>>(temp.Select(a=>new List<Point>(a)));    
+              polygons = new List<List<PointF>>(temp.Select(a=>new List<PointF>(a)));    
             }
         }
 
@@ -331,7 +331,7 @@ namespace AffineTransforms
                 for (int i = 0; i < rect.Count; i++)
                 {
                     var result = Helpers.Scale(a, b, rect[i], scalePoint);
-                    rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
+                    rect[i] = new PointF((int)result[0, 0], (int)result[0, 1]);
                 }
               
             }
@@ -341,7 +341,7 @@ namespace AffineTransforms
                 for (int i = 0; i < rect.Count; i++)
                 {
                     var result = Helpers.Scale(a, b, rect[i], centerPoint);
-                    rect[i] = new Point((int)result[0, 0], (int)result[0, 1]);
+                    rect[i] = new PointF((int)result[0, 0], (int)result[0, 1]);
                 }
                 
             }
@@ -383,7 +383,7 @@ namespace AffineTransforms
             {
                 prevMode = mode;
                 mode = 8;
-                polygons.Add(new List<Point>());
+                polygons.Add(new List<PointF>());
             }
             else
             {
